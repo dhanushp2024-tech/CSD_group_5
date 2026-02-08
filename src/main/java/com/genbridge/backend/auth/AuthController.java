@@ -7,6 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -17,6 +23,19 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @Operation(
+        summary = "Register a new user",
+        description = "Creates a new user account with email and password. Returns a success message or error."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Registration successful"),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Validation error or duplicate email",
+            content = @Content(schema = @Schema(implementation = com.genbridge.backend.auth.dto.ErrorResponse.class))
+        ),
+        @ApiResponse(responseCode = "500", description = "Server error")
+    })
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest request) {
         try {
