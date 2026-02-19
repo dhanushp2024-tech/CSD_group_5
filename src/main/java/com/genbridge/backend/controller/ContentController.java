@@ -32,8 +32,8 @@ public class ContentController {
     public ResponseEntity<Map<String, String>> publishContent(
             @Valid @RequestBody ContentRequest request,
             @RequestParam Long contributorId) {
-        
-        contentService.createContent(request, contributorId);
+
+        contentService.publishContent(request, contributorId);
         
         Map<String, String> response = new HashMap<>();
         response.put("message", "✅ Content is created successfully");

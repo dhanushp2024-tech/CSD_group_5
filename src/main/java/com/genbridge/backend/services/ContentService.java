@@ -19,8 +19,18 @@ public class ContentService {
         content.setTitle(request.getTitle());
         content.setDescription(request.getDescription());
         content.setTerm(request.getTerm());
-        content.setContributorId(contributorId);  // FIXED: Set Long directly
+        content.setContributorId(contributorId);
         content.setPublished(false);
+        return contentRepository.save(content);
+    }
+
+    public Content publishContent(ContentRequest request, Long contributorId) {
+        Content content = new Content();
+        content.setTitle(request.getTitle());
+        content.setDescription(request.getDescription());
+        content.setTerm(request.getTerm());
+        content.setContributorId(contributorId);
+        content.setPublished(true);
         return contentRepository.save(content);
     }
 }
