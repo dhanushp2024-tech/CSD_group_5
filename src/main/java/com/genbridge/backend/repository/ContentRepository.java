@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface ContentRepository extends JpaRepository<Content, UUID> {
     List<Content> findByStatus(String status);
-    List<Content> findByContributorId(UUID contributorId);
+    List<Content> findByContributor_Id(UUID contributorId);
 }
