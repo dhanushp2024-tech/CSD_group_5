@@ -25,9 +25,8 @@ public class Content {
     @Column(nullable = false)
     private String term;
     
-    @ManyToOne
-    @JoinColumn(name = "contributor_id", nullable = false)
-    private User contributor;
+    @Column(nullable = false)
+    private Long contributorId;  // FIXED: Use Long instead of User entity
     
     @Column(nullable = false)
     private boolean published = false;

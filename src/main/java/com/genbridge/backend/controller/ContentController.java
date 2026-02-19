@@ -1,7 +1,7 @@
 package com.genbridge.backend.controller;
 
 import com.genbridge.backend.dto.ContentRequest;
-import com.genbridge.backend.service.ContentService;
+import com.genbridge.backend.services.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

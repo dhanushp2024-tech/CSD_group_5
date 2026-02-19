@@ -1,4 +1,4 @@
-package com.genbridge.backend.service;
+package com.genbridge.backend.services;
 
 import com.genbridge.backend.dto.ContentRequest;
 import com.genbridge.backend.entity.Content;
@@ -19,7 +19,7 @@ public class ContentService {
         content.setTitle(request.getTitle());
         content.setDescription(request.getDescription());
         content.setTerm(request.getTerm());
-        // contributor set by frontend authenticated user
+        content.setContributorId(contributorId);  // FIXED: Set Long directly
         content.setPublished(false);
         return contentRepository.save(content);
     }
