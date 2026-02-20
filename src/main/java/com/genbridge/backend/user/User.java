@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 import java.util.UUID;
 
 @Entity
@@ -27,7 +26,8 @@ public class User {
     @Column(nullable = false, length = 30)
     private String role = "LEARNER";
 
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String passwordHash, String role) {
         this.email = email;

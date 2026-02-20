@@ -13,7 +13,8 @@ public class RegistrationRequest {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    public RegistrationRequest() {}
+    public RegistrationRequest() {
+    }
 
     public RegistrationRequest(String email, String password) {
         this.email = email;

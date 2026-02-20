@@ -29,4 +29,24 @@ public class UserService {
         User user = new User(request.getEmail(), hashedPassword, "LEARNER");
         userRepository.save(user);
     }
+<<<<<<< Updated upstream
+=======
+
+    public LoginResponse loginUser(LoginRequest request) {
+        // Step 1: Find the user by email. Throw a clear error if not found.
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+
+        // Step 2: Compare the submitted password against the stored hash
+        // passwordEncoder.matches() hashes the raw password and compares - never store
+        // raw passwords!
+        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
+
+        // Step 3: Credentials are correct — generate and return the JWT token
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
+        return new LoginResponse(token, user.getEmail(), user.getRole());
+    }
+>>>>>>> Stashed changes
 }
