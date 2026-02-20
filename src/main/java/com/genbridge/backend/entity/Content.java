@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "content")
@@ -25,6 +26,7 @@ public class Content {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contributor_id", nullable = false)
+    @JsonIgnore
     private User contributor;
 
     @Column(nullable = false)
