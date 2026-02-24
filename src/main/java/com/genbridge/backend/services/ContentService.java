@@ -62,6 +62,11 @@ public class ContentService {
     public Content approveContent(UUID contentId) {
         Content content = contentRepository.findById(contentId)
                 .orElseThrow(() -> new RuntimeException("Content not found"));
+
+        if (!content.getStatus().equals("PENDING")) {
+            throw new IllegalStateException("Only PENDING content can be approved");
+        }
+
         content.setStatus("APPROVED");
         return contentRepository.save(content);
     }
@@ -70,6 +75,11 @@ public class ContentService {
     public Content rejectContent(UUID contentId) {
         Content content = contentRepository.findById(contentId)
                 .orElseThrow(() -> new RuntimeException("Content not found"));
+
+        if (!content.getStatus().equals("PENDING")) {
+            throw new IllegalStateException("Only PENDING content can be rejected");
+        }
+
         content.setStatus("REJECTED");
         return contentRepository.save(content);
     }
