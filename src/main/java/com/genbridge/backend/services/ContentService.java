@@ -58,10 +58,31 @@ public class ContentService {
         return contentRepository.findByStatus("PENDING");
     }
 
+    // // ADMIN: Approve a piece of content
+    // public Content approveContent(UUID contentId) {
+    // Content content = contentRepository.findById(contentId)
+    // .orElseThrow(() -> new RuntimeException("Content not found"));
+    // content.setStatus("APPROVED");
+    // return contentRepository.save(content);
+    // }
+
+    // // ADMIN: Reject a piece of content
+    // public Content rejectContent(UUID contentId) {
+    // Content content = contentRepository.findById(contentId)
+    // .orElseThrow(() -> new RuntimeException("Content not found"));
+    // content.setStatus("REJECTED");
+    // return contentRepository.save(content);
+    // }
+
     // ADMIN: Approve a piece of content
     public Content approveContent(UUID contentId) {
         Content content = contentRepository.findById(contentId)
                 .orElseThrow(() -> new RuntimeException("Content not found"));
+
+        if (!content.getStatus().equals("PENDING")) {
+            throw new IllegalStateException("Only PENDING content can be approved");
+        }
+
         content.setStatus("APPROVED");
         return contentRepository.save(content);
     }
@@ -70,6 +91,11 @@ public class ContentService {
     public Content rejectContent(UUID contentId) {
         Content content = contentRepository.findById(contentId)
                 .orElseThrow(() -> new RuntimeException("Content not found"));
+
+        if (!content.getStatus().equals("PENDING")) {
+            throw new IllegalStateException("Only PENDING content can be rejected");
+        }
+
         content.setStatus("REJECTED");
         return contentRepository.save(content);
     }
