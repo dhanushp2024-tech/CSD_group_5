@@ -8,6 +8,7 @@ import com.genbridge.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +22,9 @@ public class ContentService {
     @Autowired
     private UserRepository userRepository;
 
-    public Content saveDraft(ContentRequest request, UUID contributorId) {
-        User contributor = userRepository.findById(contributorId)
+    // LEARNER: Save content as a draft (not yet submitted for review)
+    public Content saveDraft(ContentRequest request, String contributorEmail) {
+        User contributor = userRepository.findByEmail(contributorEmail)
                 .orElseThrow(() -> new RuntimeException("Contributor not found"));
         Content content = new Content();
         content.setTitle(request.getTitle());
@@ -33,8 +35,9 @@ public class ContentService {
         return contentRepository.save(content);
     }
 
-    public Content submitForReview(ContentRequest request, UUID contributorId) {
-        User contributor = userRepository.findById(contributorId)
+    // LEARNER: Submit content for admin review
+    public Content submitForReview(ContentRequest request, String contributorEmail) {
+        User contributor = userRepository.findByEmail(contributorEmail)
                 .orElseThrow(() -> new RuntimeException("Contributor not found"));
         Content content = new Content();
         content.setTitle(request.getTitle());
@@ -45,7 +48,36 @@ public class ContentService {
         return contentRepository.save(content);
     }
 
+    // PUBLIC: Get all approved content
     public List<Content> getApprovedContent() {
         return contentRepository.findByStatus("APPROVED");
+    }
+
+    // ADMIN: Get all content pending review
+    public List<Content> getPendingContent() {
+        return contentRepository.findByStatus("PENDING");
+    }
+
+    // ADMIN: Approve a piece of content
+    public Content approveContent(UUID contentId) {
+        Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new RuntimeException("Content not found"));
+        content.setStatus("APPROVED");
+        return contentRepository.save(content);
+    }
+
+    // ADMIN: Reject a piece of content
+    public Content rejectContent(UUID contentId) {
+        Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new RuntimeException("Content not found"));
+        content.setStatus("REJECTED");
+        return contentRepository.save(content);
+    }
+
+    // ADMIN: Delete a piece of content
+    public void deleteContent(UUID contentId) {
+        Content content = contentRepository.findById(contentId)
+                .orElseThrow(() -> new RuntimeException("Content not found"));
+        contentRepository.delete(content);
     }
 }
