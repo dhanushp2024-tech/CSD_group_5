@@ -25,7 +25,7 @@ const Navbar = () => {
             <Sparkles className="w-5 h-5 text-primary-foreground" />
           </div>
           <span className="font-display text-xl font-bold text-foreground">
-            GenFluent
+            GenBridge
           </span>
         </Link>
 

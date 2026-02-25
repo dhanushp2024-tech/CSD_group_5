@@ -130,7 +130,7 @@ const Index = () => {
       <footer className="border-t border-border py-8 px-4">
         <div className="container mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2026 GenFluent. All rights reserved.
+            © 2026 GenBridge. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Privacy</a>

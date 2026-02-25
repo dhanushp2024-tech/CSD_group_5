@@ -37,7 +37,7 @@ const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-display text-xl font-bold text-foreground">GenFluent</span>
+            <span className="font-display text-xl font-bold text-foreground">GenBridge</span>
           </Link>
 
           <h1 className="font-display text-3xl font-bold text-foreground mb-2">{title}</h1>
