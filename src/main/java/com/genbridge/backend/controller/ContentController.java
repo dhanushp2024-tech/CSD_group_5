@@ -6,11 +6,9 @@ import com.genbridge.backend.dto.ModerationResponse;
 import com.genbridge.backend.dto.RejectRequest;
 import com.genbridge.backend.entity.Content;
 import com.genbridge.backend.services.ContentService;
-import com.genbridge.backend.user.User;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +18,7 @@ import java.util.UUID;
 @RequestMapping("/api/content")
 public class ContentController {
 
-    @Autowired
-    private ContentService contentService;
+    private final ContentService contentService;
 
     // ================= USER =================
 

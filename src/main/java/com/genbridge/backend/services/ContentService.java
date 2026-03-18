@@ -14,14 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
 public class ContentService {
 
-    @Autowired
-    private ContentRepository contentRepository;
+    private final ContentRepository contentRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -72,6 +70,7 @@ public class ContentService {
                 .orElseThrow();
 
         Content content = new Content();
+        content.setLessonId(request.getLessonId());
         content.setTitle(request.getTitle());
         content.setTerm(request.getTerm());
         content.setBody(request.getBody());

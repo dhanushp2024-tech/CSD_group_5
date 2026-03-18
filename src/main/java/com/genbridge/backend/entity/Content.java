@@ -1,14 +1,13 @@
 package com.genbridge.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.genbridge.backend.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
-@Table(name = "content")
+@Table(name = "content", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"lesson_id", "order_index"})
+})
 public class Content {
 
     public static final String STATUS_DRAFT = "DRAFT";
@@ -17,10 +16,13 @@ public class Content {
     public static final String STATUS_REJECTED = "REJECTED";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "lesson_id", nullable = false)
+    private Long lessonId;
+
+    @Column(nullable = false, length = 200)
     private String title;
 
     @Column(nullable = false)

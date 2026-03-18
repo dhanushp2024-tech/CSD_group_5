@@ -1,5 +1,6 @@
 package com.genbridge.backend.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public class ContentRequest {
