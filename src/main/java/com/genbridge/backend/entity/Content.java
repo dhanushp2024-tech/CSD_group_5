@@ -1,6 +1,7 @@
 package com.genbridge.backend.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,6 +9,11 @@ import java.time.LocalDateTime;
     @UniqueConstraint(columnNames = {"lesson_id", "order_index"})
 })
 public class Content {
+
+    public static final String STATUS_DRAFT = "DRAFT";
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_APPROVED = "APPROVED";
+    public static final String STATUS_REJECTED = "REJECTED";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,40 +25,99 @@ public class Content {
     @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String term;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String description;
+    private String body;
 
-    @Column(columnDefinition = "TEXT")
-    private String example;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
-    @Column(name = "order_index", nullable = false)
-    private int orderIndex;
+    @Column(nullable = false)
+    private String status = STATUS_DRAFT;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", nullable = false)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "passwordHash" })
+    private User createdBy;
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
-    public Content() {}
+    private LocalDateTime updatedAt;
 
-    public Long getId() { return id; }
-    public Long getLessonId() { return lessonId; }
-    public void setLessonId(Long lessonId) { this.lessonId = lessonId; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-    public String getTerm() { return term; }
-    public void setTerm(String term) { this.term = term; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public String getExample() { return example; }
-    public void setExample(String example) { this.example = example; }
-    public int getOrderIndex() { return orderIndex; }
-    public void setOrderIndex(int orderIndex) { this.orderIndex = orderIndex; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Content() {
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 }
